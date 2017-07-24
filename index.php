@@ -13,7 +13,7 @@ date_default_timezone_set('Asia/Shanghai');
 define('CONTROLLER_NAMESPACE', 'App\\Controllers\\');
 define('MODEL_NAMESPACE', 'App\\Model\\');
 
-foreach (glob(__DIR__ . '/Core/*.php') as $file)
+foreach (glob(__DIR__ . '/Sim/loader.php') as $file)
     require_once $file;
 foreach (glob(__DIR__ . '/Config/*.php') as $file)
     require_once $file;

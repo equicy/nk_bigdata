@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Sim\IController;
+
 class Example extends IController {
     /**
      * @var \App\Model\Example;

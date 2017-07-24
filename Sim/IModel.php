@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Sim;
 
 use Sim\Core\Model;
 
