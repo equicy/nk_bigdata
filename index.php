@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * 这是Sim入口文件
+ */
 $php_version = phpversion();
 if (version_compare($php_version, '7.1.0', '<')) {
     echo "PHP version $php_version < PHP 7.1.0. Please install PHP 7.1.0 or above.\n";
