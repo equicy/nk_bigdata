@@ -5,7 +5,7 @@ use DB;
 
 class Model {
     protected $sql;
-    protected $param;
+    protected $param = [];
 
     function __construct() {
 
@@ -35,7 +35,32 @@ class Model {
 
     function where(string $where, array $param = null) {
         $this->sql .= 'WHERE ' . $where . ' ';
-        $this->param = $param;
+        if($param)
+            $this->param = array_merge($param, $this->param);
+        return $this;
+    }
+
+    function andWhere(string $where, array $param = null) {
+        $this->sql .= 'AND (' . $where . ') ';
+        if($param)
+            $this->param = array_merge($param, $this->param);
+        return $this;
+    }
+
+    function orWhere(string $where, array $param = null) {
+        $this->sql .= 'OR (' . $where . ') ';
+        if($param)
+            $this->param = array_merge($param, $this->param);
+        return $this;
+    }
+
+    function sqlAndWhere(string $where) {
+        $this->sql .= 'AND (' . $where . ') ';
+        return $this;
+    }
+
+    function sqlOrWhere(string $where) {
+        $this->sql .= 'Or (' . $where . ') ';
         return $this;
     }
 
@@ -45,9 +70,46 @@ class Model {
     }
 
     function select(string $col = '*') {
-        unset($this->sql);
-        $this->sql .= 'SELECT ' . $col . ' ';
+        $this->param = [];
+        $this->sql = 'SELECT ' . $col . ' ';
         return $this;
+    }
+
+    function update($table) {
+        $this->param = [];
+        $this->sql = 'UPDATE ' . $table . ' ';
+        return $this;
+    }
+
+    function set($col, array $param = null) {
+        $this->sql .= 'SET ' . $col . ' ';
+        if($param)
+            $this->param = array_merge($param, $this->param);
+        return $this;
+    }
+
+    function insert($table, $col) {
+        $this->param = [];
+        $this->sql = "INSERT INTO `$table` ($col) ";
+        return $this;
+    }
+
+    function values($values, array $param = null) {
+        $this->sql .= "VALUES($values) ";
+        if($param)
+            $this->param = array_merge($param, $this->param);
+        return $this;
+    }
+
+    function exec() {
+        DB::q($this->sql, $this->param);
+        return DB::lastInsertId();
+    }
+
+    function save() {
+        if($this->param)
+            return DB::q($this->sql, $this->param);
+        return DB::q($this->sql);
     }
 
     function group($group) {
@@ -68,6 +130,7 @@ class Model {
     }
 
     function column() {
+        //return DB::q($this->sql);
         if($this->param)
             return DB::q($this->sql, $this->param)->fetchColumn();
         return DB::q($this->sql)->fetchColumn();

@@ -36,7 +36,7 @@ class IController extends Controller {
             'data' => $data
         ];
 
-        exit(json_encode($return));
+        exit(json_encode($return, JSON_UNESCAPED_UNICODE));
     }
 
     public function error($status = 100, $data = 'Illegal request') {
@@ -45,7 +45,7 @@ class IController extends Controller {
             'data' => $data
         ];
 
-        exit(json_encode($return));
+        exit(json_encode($return, JSON_UNESCAPED_UNICODE));
     }
 
     public function success($status = 0, $data = 'The request was successful') {
@@ -54,6 +54,6 @@ class IController extends Controller {
             'data' => $data
         ];
 
-        exit(json_encode($return));
+        exit(json_encode($return, JSON_UNESCAPED_UNICODE));
     }
 }
