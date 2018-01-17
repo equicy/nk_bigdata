@@ -9,6 +9,9 @@ class Upload {
     protected $error;
 
     function __construct(array $config) {
+        if(!file_exists($config['path'])) {
+            mkdir($config['path'], 0775, true);
+        }
         $storage = new FileSystem($config['path']);
         $this->file = new File($config['key'], $storage);
         $new_filename = uniqid();
