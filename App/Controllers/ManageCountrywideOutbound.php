@@ -22,6 +22,7 @@ class ManageCountrywideOutbound extends IController {
         if($_POST['month'] < 0 || $_POST['month'] > 12) {
             $this->error(2002, '月份不符合规范');
         }
+        //type: 团队数: 0 人数: 1
         $type = intval($_POST['type'] == 1);
         $result = $this->invoke('CountrywideOutbound')->getRow($_POST['year'], $_POST['month'], $type);
         if($result)

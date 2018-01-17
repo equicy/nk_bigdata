@@ -39,25 +39,27 @@ class FeatureAnalysis extends IController {
         $data = $this->model->getFocus($this->param['year'], $this->param['month']);
         $data['destination'] = json_decode($data['destination'], true);
         $this->_percentShift($data['destination']);
+        $data['focus_type'] = json_decode($data['focus_type'], true);
+        $this->_percentShift($data['focus_type']);
         $this->returnJson(0, $data);
     }
 
     function supplySide() {
         $data = $this->model->getSupplySide($this->param['year'], $this->param['month']);
         $data['public_government'] = json_decode($data['public_government'], true);
-        $this->_percentShift($data['public_government']);
+        //$this->_percentShift($data['public_government']);
         $data['public_business'] = json_decode($data['public_business'], true);
-        $this->_percentShift($data['public_business']);
+        //$this->_percentShift($data['public_business']);
         $this->returnJson(0, $data);
     }
 
     function _percentShift(&$data) {
         if(is_array($data)) {
             foreach ($data as &$row) {
-                $row['value'] = $this->config['PERCENT_RADIX'] * ((float)$row['value']/100);
+                $row['value'] = number_format(floatval($row['value'] * 100), $this->config['PERCENT_DECIMALS']);
             }
         } elseif(is_string($data)) {
-            $data = $this->config['PERCENT_RADIX'] * ((float)$data/100);
+            $data = number_format(floatval($data * 100), $this->config['PERCENT_DECIMALS']);
         }
     }
 }

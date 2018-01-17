@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use Sim\IController;
@@ -35,16 +34,18 @@ class ManageSupplySideFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $public_government[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0],
                 'value' => $row[1],
+                //$row[0] => $row[1]
             ];
         }
         $data = $this->_file('public_business');
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $public_business[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0],
                 'value' => $row[1],
+                //$row[0] => $row[1]
             ];
         }
         $public_government = json_encode($public_government, JSON_UNESCAPED_UNICODE);
@@ -66,8 +67,9 @@ class ManageSupplySideFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $public_government[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0],
                 'value' => $row[1],
+                //$row[0] => $row[1]
             ];
         }
         $public_government = json_encode($public_government, JSON_UNESCAPED_UNICODE);
@@ -81,8 +83,9 @@ class ManageSupplySideFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $public_business[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0],
                 'value' => $row[1],
+                //$row[0] => $row[1]
             ];
         }
         $public_business = json_encode($public_business, JSON_UNESCAPED_UNICODE);

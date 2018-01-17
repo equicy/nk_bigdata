@@ -48,6 +48,7 @@ $_ROUTES = [
     'analysis/spend' => ['GET', 'FeatureAnalysis', 'spend', 'Middleware@manager'],
     'manager/analysis/focus' => ['POST', 'ManageFocusFeatureAnalysis', 'focusInsert', 'Middleware@manager'],
     'manager/analysis/focus/destination' => ['POST', 'ManageFocusFeatureAnalysis', 'destinationUpdate', 'Middleware@manager'],
+    'manager/analysis/focus/focus-type' => ['POST', 'ManageFocusFeatureAnalysis', 'focusTypeUpdate', 'Middleware@manager'],
     'analysis/focus' => ['GET', 'FeatureAnalysis', 'focus', 'Middleware@manager'],
     'manager/analysis/supplyside' => ['POST', 'ManageSupplySideFeatureAnalysis', 'supplySideInsert', 'Middleware@manager'],
     'manager/analysis/supplyside/public-government' => ['POST', 'ManageSupplySideFeatureAnalysis', 'publicGovernmentUpdate', 'Middleware@manager'],

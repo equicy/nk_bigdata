@@ -35,7 +35,7 @@ class ManageTouristFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $age[] = [
-              'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+              'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
               'value' => $row[1],
             ];
         }
@@ -43,7 +43,7 @@ class ManageTouristFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $education[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -66,7 +66,7 @@ class ManageTouristFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $age[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -81,7 +81,7 @@ class ManageTouristFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $education[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }

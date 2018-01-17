@@ -31,19 +31,31 @@ class ManageFocusFeatureAnalysis extends IController {
         $result = $this->invoke('FeatureAnalysis')->getFocus(intval($_POST['year']), intval($_POST['month']));
         if($result)
             $this->error(2001, '插入失败,该记录已经存在');
-        $data = $this->_file('destination');
+        $data = $this->_file('focus_type');
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
-            $focus[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+            $focus_type[] = [
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
-        $focus = json_encode($focus, JSON_UNESCAPED_UNICODE);
+        $focus_type = json_encode($focus_type, JSON_UNESCAPED_UNICODE);
+
+        $data = $this->_file('destination');
+        $rows = $this->getData($data['path']);
+        foreach ($rows as $row) {
+            $destination[] = [
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
+                'value' => $row[1],
+            ];
+        }
+        $destination = json_encode($destination, JSON_UNESCAPED_UNICODE);
+
         $focus = [
             'year' => $_POST['year'],
             'month' => $_POST['month'],
-            'destination' => $focus,
+            'destination' => $destination,
+            'focus_type' => $focus_type,
         ];
         $result = $this->model->insertRow($focus);
         if(!$result)
@@ -56,12 +68,27 @@ class ManageFocusFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $destination[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
         $destination = json_encode($destination, JSON_UNESCAPED_UNICODE);
         $result = $this->model->destinationUpdate(intval($_POST['id']), $destination);
+        if(!$result) $this->error();
+        $this->success();
+    }
+
+    function focusTypeUpdate() {
+        $data = $this->_file('focus_type');
+        $rows = $this->getData($data['path']);
+        foreach ($rows as $row) {
+            $focus_type[] = [
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
+                'value' => $row[1],
+            ];
+        }
+        $focus_type = json_encode($focus_type, JSON_UNESCAPED_UNICODE);
+        $result = $this->model->focusTypeUpdate(intval($_POST['id']), $focus_type);
         if(!$result) $this->error();
         $this->success();
     }

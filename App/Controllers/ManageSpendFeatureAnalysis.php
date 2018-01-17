@@ -35,7 +35,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $family[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -43,7 +43,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $asset[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -51,7 +51,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $job[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -76,7 +76,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $family[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -91,7 +91,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $asset[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
@@ -106,7 +106,7 @@ class ManageSpendFeatureAnalysis extends IController {
         $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
             $job[] = [
-                'name' => $row[0] . ' ' . $row[1] * 100 . '%',
+                'name' => $row[0] . ' ' . number_format($row[1] * 100, 2) . '%',
                 'value' => $row[1],
             ];
         }
