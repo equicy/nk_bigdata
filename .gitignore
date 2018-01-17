@@ -2,3 +2,4 @@ Config/Db.php
 composer.lock
 *.xml
 .idea/
+Public/upload/
