@@ -16,9 +16,9 @@ class CountrywideOutbound extends IController {
     }
 
     function get() {
-        //type:   团队数: 0 人数: 1
-        $data = $this->model->getRow(intval($this->param['year']), intval($this->param['month']), intval($this->param['type'] == 1));
-        $data['outbound'] = json_decode($data['data'], true);
+        $data = $this->model->getRow(intval($this->param['year']), intval($this->param['month']));
+        $data['customer_source'] = json_decode($data['customer_source'], true);
+        $data['inbound_count'] = json_decode($data['inbound_count'], true);
         $this->returnJson(0, $data);
     }
 }

@@ -24,6 +24,9 @@ trait Readxls {
                 {
                     $data[$i][] = $cell->getCalculatedValue(); //获取cell中数据
                 }
+                if (empty($data[$i][0])) {
+                    unset($data[$i]);
+                }
                 $i++;
             }
         }
@@ -45,6 +48,9 @@ trait Readxls {
                 foreach($row->getCellIterator() as $cell)  //逐列读取
                 {
                     $data[$i][] = $cell->getValue(); //获取cell中数据
+                }
+                if (empty($data[$i][0])) {
+                    unset($data[$i]);
                 }
                 $i++;
             }

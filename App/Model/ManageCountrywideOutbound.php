@@ -16,19 +16,32 @@ class ManageCountrywideOutbound extends IModel {
             ->query();
     }
 
+    function insertFile($data) {
+        return $data = $this->insert('file', 'real_name, uniqid_name, path')
+            ->values("'$data[real_name]', '$data[uniqid_name]', '/Public/upload/xls'")->exec();
+    }
+
     function insertRow($data) {
-        return $this->insert('countrywide_outbound', 'year, month, data, type')
+        return $this->insert('countrywide_outbound', 'year, month, customer_source, exitport_people_number')
             ->values(':y, :m, :d, :t', [
                 ':y' => $data['year'],
                 ':m' => $data['month'],
-                ':d' => $data['data'],
-                ':t' => $data['type']
+                ':d' => $data['customer_source'],
+                ':t' => $data['exitport_people_number']
             ])->exec();
     }
 
-    function outboundUpdate($id, $data) {
+    function customerSourceUpdate($id, $data) {
+        return $this->_dataUpdate($id, $data, 'customer_source');
+    }
+
+    function exitportUpdate($id, $data) {
+        return $this->_dataUpdate($id, $data, 'exitport_people_number');
+    }
+
+    function _dataUpdate($id, $data, $key) {
         return $this->update('countrywide_outbound')
-            ->set('data = :d', [':d' => $data])
+            ->set($key.' = :d', [':d' => $data])
             ->where('id = :id', [':id' => $id])
             ->save();
     }

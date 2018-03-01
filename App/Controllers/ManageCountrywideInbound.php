@@ -22,41 +22,41 @@ class ManageCountrywideInbound extends IController {
         if($_POST['month'] < 0 || $_POST['month'] > 12) {
             $this->error(2002, '月份不符合规范');
         }
-        $type = intval($_POST['type'] == 1);
-        $result = $this->invoke('CountrywideInbound')->getRow($_POST['year'], $_POST['month'], $type);
+        $result = $this->invoke('CountrywideInbound')->getRow($_POST['year'], $_POST['month']);
         if($result)
             $this->error(2001, '插入失败,该记录已经存在');
-        $data = $this->_inboundFile();
-        $rows = $this->getData($data['path'], 1);
-        $head = array_shift($rows);
-        $inbound['head'] = $head;
+        $data = $this->_file('customer_source');
+        $result = $this->model->insertFile($data);
+        if(!$result)
+            $this->error(100, '保存文件失败');
+        $rows = $this->getData($data['path']);
         foreach ($rows as $row) {
-            $inbound['data'][] = $row;
+            $customer[] = [
+                $row[0] => $row[1]
+            ];
         }
-        $inbound = json_encode($inbound, JSON_UNESCAPED_UNICODE);
-        $inbound = [
+        $customer = json_encode($customer, JSON_UNESCAPED_UNICODE);
+        $data = $this->_file('inbound_count');
+        $result = $this->model->insertFile($data);
+        if(!$result)
+            $this->error(100, '保存文件失败');
+        $rows = $this->getData($data['path']);
+        foreach ($rows as $row) {
+            $inbound_count[] = [
+                $row[0] => $row[1]
+            ];
+        }
+        $inbound_count = json_encode($inbound_count, JSON_UNESCAPED_UNICODE);
+        $data = [
             'year' => $_POST['year'],
             'month' => $_POST['month'],
-            'data' => $inbound,
-            'type' => $type
+            'inbound_count' => $inbound_count,
+            'customer_source' => $customer
         ];
-        $result = $this->model->insertRow($inbound);
+
+        $result = $this->model->insertRow($data);
         if(!$result)
             $this->error(100, '插入记录失败');
-        $this->success();
-    }
-
-    function inboundUpdate() {
-        $data = $this->_inboundFile();
-        $rows = $this->getData($data['path'], 1);
-        $head = array_shift($rows);
-        $inbound['head'] = $head;
-        foreach ($rows as $row) {
-            $inbound['data'][] = $row;
-        }
-        $inbound = json_encode($inbound, JSON_UNESCAPED_UNICODE);
-        $result = $this->model->inboundUpdate(intval($_POST['id']), $inbound);
-        if(!$result) $this->error();
         $this->success();
     }
 
@@ -66,10 +66,37 @@ class ManageCountrywideInbound extends IController {
         $this->returnJson(0, $data);
     }
 
-    function _inboundFile() {
-        //print_r($_FILES);exit;
+    function customerSourceUpdate() {
+        $data = $this->_file('customer_source');
+        $rows = $this->getData($data['path']);
+        foreach ($rows as $row) {
+            $customer[] = [
+                $row[0] => $row[1]
+            ];
+        }
+        $customer = json_encode($customer, JSON_UNESCAPED_UNICODE);
+        $result = $this->model->customerSourceUpdate(intval($_POST['id']), $customer);
+        if(!$result) $this->error();
+        $this->success();
+    }
+
+    function inboundCountUpdate() {
+        $data = $this->_file('inbound_count');
+        $rows = $this->getData($data['path']);
+        foreach ($rows as $row) {
+            $inbound_count[] = [
+                $row[0] => $row[1]
+            ];
+        }
+        $inbound_count = json_encode($inbound_count, JSON_UNESCAPED_UNICODE);
+        $result = $this->model->inboundCountUpdate(intval($_POST['id']), $inbound_count);
+        if(!$result) $this->error();
+        $this->success();
+    }
+
+    function _file($key) {
         $config = [
-            'key' => 'inbound',
+            'key' => $key,
             'path' => __DIR__ . '/../../Public/upload/xls',
             'size' => '10M',
             'mimetype' => ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/wps-office.xlsx', 'application/wps-office.xls']
