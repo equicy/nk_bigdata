@@ -18,7 +18,7 @@ class CountrywideInbound extends IController {
     function get() {
         $data = $this->model->getRow(intval($this->param['year']), intval($this->param['month']));
         $data['customer_source'] = json_decode($data['customer_source'], true);
-        $data['exitport_people_number'] = json_decode($data['exitport_people_number'], true);
+        $data['inbound_count'] = json_decode($data['inbound_count'], true);
         $this->returnJson(0, $data);
     }
 }
