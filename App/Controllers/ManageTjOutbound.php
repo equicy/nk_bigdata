@@ -49,8 +49,8 @@ class ManageTjOutbound extends IController {
                 $row[0] => $row[1]
             ];
         }
-        asort($exitport, SORT_NUMERIC);
-        $exitport = array_slice($exitport, 0, $_CONFIG['exitport_ranking_number']);
+        //asort($exitport, SORT_NUMERIC);
+        //$exitport = array_slice($exitport, 0, $_CONFIG['exitport_ranking_number']);
         $exitport = json_encode($exitport, JSON_UNESCAPED_UNICODE);
         $data = [
             'year' => $_POST['year'],

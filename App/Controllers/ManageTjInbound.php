@@ -50,8 +50,8 @@ class ManageTjInbound extends IController {
                 $row[0] => $row[1]
             ];
         }
-        asort($entryport, SORT_NUMERIC);
-        $entryport = array_slice($entryport, 0, $_CONFIG['ioport_ranking_number']);
+        //asort($entryport, SORT_NUMERIC);
+        //$entryport = array_slice($entryport, 0, $_CONFIG['ioport_ranking_number']);
         $entryport = json_encode($entryport, JSON_UNESCAPED_UNICODE);
         $data = [
             'year' => $_POST['year'],
